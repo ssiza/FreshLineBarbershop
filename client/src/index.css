@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Lato:wght@300;400;500&display=swap');
+
+:root {
+  --background: 26 26 26; /* #1A1A1A */
+  --foreground: 0 0% 98%; /* #FFFFFF */
+  --muted: 74 74 74; /* #4A4A4A */
+  --muted-foreground: 96 96 96; /* #F5F5F5 */
+  --popover: 26 26 26; /* #1A1A1A */
+  --popover-foreground: 0 0% 98%; /* #FFFFFF */
+  --card: 44 44 44; /* #2C2C2C */
+  --card-foreground: 0 0% 98%; /* #FFFFFF */
+  --border: 74 74 74; /* #4A4A4A */
+  --input: 44 44 44; /* #2C2C2C */
+  --primary: 45 93% 58%; /* #D4AF37 */
+  --primary-foreground: 26 26 26; /* #1A1A1A */
+  --secondary: 44 44 44; /* #2C2C2C */
+  --secondary-foreground: 0 0% 98%; /* #FFFFFF */
+  --accent: 44 44 44; /* #2C2C2C */
+  --accent-foreground: 0 0% 98%; /* #FFFFFF */
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 60 9.1% 97.8%;
+  --ring: 45 93% 58%; /* #D4AF37 */
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: 26 26 26; /* #1A1A1A */
+  --foreground: 0 0% 98%; /* #FFFFFF */
+  --muted: 74 74 74; /* #4A4A4A */
+  --muted-foreground: 96 96 96; /* #F5F5F5 */
+  --popover: 26 26 26; /* #1A1A1A */
+  --popover-foreground: 0 0% 98%; /* #FFFFFF */
+  --card: 44 44 44; /* #2C2C2C */
+  --card-foreground: 0 0% 98%; /* #FFFFFF */
+  --border: 74 74 74; /* #4A4A4A */
+  --input: 44 44 44; /* #2C2C2C */
+  --primary: 45 93% 58%; /* #D4AF37 */
+  --primary-foreground: 26 26 26; /* #1A1A1A */
+  --secondary: 44 44 44; /* #2C2C2C */
+  --secondary-foreground: 0 0% 98%; /* #FFFFFF */
+  --accent: 44 44 44; /* #2C2C2C */
+  --accent-foreground: 0 0% 98%; /* #FFFFFF */
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 45 93% 58%; /* #D4AF37 */
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-lato antialiased bg-background text-foreground;
+    background-color: #1A1A1A;
+    color: #FFFFFF;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-poppins;
+  }
+}
+
+@layer utilities {
+  .font-poppins {
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .font-lato {
+    font-family: 'Lato', sans-serif;
+  }
+
+  .text-primary-custom {
+    color: #1A1A1A;
+  }
+
+  .text-secondary-custom {
+    color: #D4AF37;
+  }
+
+  .text-background-custom {
+    color: #2C2C2C;
+  }
+
+  .text-accent-custom {
+    color: #F5F5F5;
+  }
+
+  .text-neutral-custom {
+    color: #4A4A4A;
+  }
+
+  .bg-primary-custom {
+    background-color: #1A1A1A;
+  }
+
+  .bg-secondary-custom {
+    background-color: #D4AF37;
+  }
+
+  .bg-background-custom {
+    background-color: #2C2C2C;
+  }
+
+  .bg-accent-custom {
+    background-color: #F5F5F5;
+  }
+
+  .bg-neutral-custom {
+    background-color: #4A4A4A;
+  }
+
+  .border-secondary-custom {
+    border-color: #D4AF37;
+  }
+
+  .border-neutral-custom {
+    border-color: #4A4A4A;
+  }
+
+  .hero-gradient {
+    background: linear-gradient(135deg, rgba(26, 26, 26, 0.9), rgba(44, 44, 44, 0.8));
+  }
+
+  .gold-glow {
+    box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+  }
+
+  .service-card:hover {
+    transform: translateY(-5px);
+    transition: all 0.3s ease;
+  }
+
+  .gallery-item:hover {
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+  }
+}
