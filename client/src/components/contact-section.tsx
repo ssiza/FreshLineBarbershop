@@ -21,8 +21,8 @@ export default function ContactSection() {
                 <div className="flex items-center">
                   <MapPin className="text-secondary-custom text-xl w-8 h-8" />
                   <div className="ml-4">
-                    <div className="font-poppins font-medium">123 Main Street</div>
-                    <div className="text-accent-custom">Downtown District, NY 10001</div>
+                    <div className="font-poppins font-medium">123 Main Street, Apt 4B</div>
+                    <div className="text-accent-custom">Anytown, CA 91234-5678</div>
                   </div>
                 </div>
                 <div className="flex items-center">
@@ -63,16 +63,17 @@ export default function ContactSection() {
 
           <div>
             <div className="bg-primary-custom p-2 rounded-xl border border-neutral-custom/20 h-96">
-              <div className="w-full h-full bg-neutral-custom/20 rounded-lg flex items-center justify-center">
-                <div className="text-center text-accent-custom">
-                  <MapPin className="h-16 w-16 mb-4 text-secondary-custom mx-auto" />
-                  <div className="font-poppins font-medium">Interactive Map</div>
-                  <div className="text-sm">Google Maps integration</div>
-                  <div className="text-xs mt-2 text-neutral-custom">
-                    Map would be integrated here with actual location
-                  </div>
-                </div>
-              </div>
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3022.9663095343008!2d-74.00425878428698!3d40.71277937933185!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c25a165bedccab%3A0x2cb2ddf003b5ae01!2s123%20Main%20St%2C%20New%20York%2C%20NY%2010038%2C%20USA!5e0!3m2!1sen!2sus!4v1647043083084!5m2!1sen!2sus"
+                width="100%"
+                height="100%"
+                style={{ border: 0, borderRadius: '0.5rem' }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Fresh Line Barbershop Location"
+                aria-label="Interactive map showing Fresh Line Barbershop location"
+              />
             </div>
           </div>
         </div>

@@ -74,17 +74,17 @@ app.use((req, res, next) => {
     });
   }
 
-  // Use Vercel's PORT environment variable or fallback to 5000 for local development
-  const port = process.env.PORT || 5000;
+  // Use Vercel's PORT environment variable or fallback to 3000 for local development
+  const PORT = process.env.PORT || 3000;
   
   // Only start the server if we're not in a serverless environment
   if (process.env.NODE_ENV !== "production" || !process.env.VERCEL) {
     server.listen({
-      port,
+      port: PORT,
       host: "0.0.0.0",
       reusePort: true,
     }, () => {
-      log(`serving on port ${port}`);
+      log(`serving on port ${PORT}`);
     });
   }
 })();
