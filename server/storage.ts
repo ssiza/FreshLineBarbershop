@@ -1,3 +1,5 @@
+import { z } from "zod";
+import { insertBookingSchema, insertTestimonialSchema } from "../shared/schema";
 import { users, bookings, testimonials, type User, type InsertUser, type Booking, type InsertBooking, type Testimonial, type InsertTestimonial } from "@shared/schema";
 
 export interface IStorage {
@@ -14,9 +16,9 @@ export interface IStorage {
 }
 
 export class MemStorage implements IStorage {
-  private users: Map<number, User>;
-  private bookings: Map<number, Booking>;
-  private testimonials: Map<number, Testimonial>;
+  private users: Map<number, any>;
+  private bookings: Map<number, any>;
+  private testimonials: Map<number, any>;
   private currentUserId: number;
   private currentBookingId: number;
   private currentTestimonialId: number;
@@ -28,13 +30,11 @@ export class MemStorage implements IStorage {
     this.currentUserId = 1;
     this.currentBookingId = 1;
     this.currentTestimonialId = 1;
-
-    // Seed with sample testimonials
     this.seedTestimonials();
   }
 
   private seedTestimonials() {
-    const sampleTestimonials: InsertTestimonial[] = [
+    const sampleTestimonials = [
       {
         name: "Marcus Johnson",
         initials: "MJ",
@@ -57,57 +57,61 @@ export class MemStorage implements IStorage {
         rating: 5
       }
     ];
-
-    sampleTestimonials.forEach(testimonial => {
+    sampleTestimonials.forEach((testimonial) => {
       this.createTestimonial(testimonial);
     });
   }
 
-  async getUser(id: number): Promise<User | undefined> {
+  async getUser(id: number) {
     return this.users.get(id);
   }
 
-  async getUserByUsername(username: string): Promise<User | undefined> {
+  async getUserByUsername(username: string) {
     return Array.from(this.users.values()).find(
-      (user) => user.username === username,
+      (user) => user.username === username
     );
   }
 
-  async createUser(insertUser: InsertUser): Promise<User> {
+  async createUser(insertUser: { username: string; password: string }) {
     const id = this.currentUserId++;
-    const user: User = { ...insertUser, id };
+    const user = { ...insertUser, id };
     this.users.set(id, user);
     return user;
   }
 
-  async createBooking(insertBooking: InsertBooking): Promise<Booking> {
+  async createBooking(insertBooking: z.infer<typeof insertBookingSchema>) {
     const id = this.currentBookingId++;
-    const booking: Booking = {
+    const booking = {
       ...insertBooking,
       id,
+      notes: insertBooking.notes || null,
       createdAt: new Date()
     };
     this.bookings.set(id, booking);
     return booking;
   }
 
-  async getBookings(): Promise<Booking[]> {
+  async getBookings() {
     return Array.from(this.bookings.values()).sort(
       (a, b) => b.createdAt.getTime() - a.createdAt.getTime()
     );
   }
 
-  async getBooking(id: number): Promise<Booking | undefined> {
+  async getBooking(id: number) {
     return this.bookings.get(id);
   }
 
-  async getTestimonials(): Promise<Testimonial[]> {
+  async getTestimonials() {
     return Array.from(this.testimonials.values());
   }
 
-  async createTestimonial(insertTestimonial: InsertTestimonial): Promise<Testimonial> {
+  async createTestimonial(insertTestimonial: z.infer<typeof insertTestimonialSchema>) {
     const id = this.currentTestimonialId++;
-    const testimonial: Testimonial = { ...insertTestimonial, id };
+    const testimonial = {
+      ...insertTestimonial,
+      id,
+      rating: insertTestimonial.rating || 5
+    };
     this.testimonials.set(id, testimonial);
     return testimonial;
   }
