@@ -3,6 +3,7 @@ import fs from "fs";
 import path from "path";
 import { createServer as createViteServer, createLogger, type ServerOptions } from "vite";
 import { nanoid } from "nanoid";
+import viteConfig from "../vite.config";
 
 const viteLogger = createLogger();
 
@@ -20,11 +21,11 @@ async function setupVite(app: express.Application, server: any) {
   const serverOptions: ServerOptions = {
     middlewareMode: true,
     hmr: { server },
-    allowedHosts: "all"
+    allowedHosts: true
   };
 
   const vite = await createViteServer({
-    ...vite_config_default,
+    ...viteConfig,
     configFile: false,
     customLogger: {
       ...viteLogger,
@@ -57,7 +58,7 @@ async function setupVite(app: express.Application, server: any) {
       const page = await vite.transformIndexHtml(url, template);
       res.status(200).set({ "Content-Type": "text/html" }).end(page);
     } catch (e) {
-      vite.ssrFixStacktrace(e);
+      vite.ssrFixStacktrace(e as Error);
       next(e);
     }
   });
