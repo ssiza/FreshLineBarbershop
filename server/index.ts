@@ -1,6 +1,7 @@
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
+import path from "path";
 
 const app = express();
 app.use(express.json());
@@ -50,19 +51,30 @@ app.use((req, res, next) => {
   // importantly only setup vite in development and after
   // setting up all the other routes so the catch-all route
   // doesn't interfere with the other routes
-  if (app.get("env") === "development") {
+  if (process.env.NODE_ENV === "development") {
     await setupVite(app, server);
   } else {
-    serveStatic(app);
+    // In production, serve static files from the dist/public directory
+    const publicPath = path.resolve(process.cwd(), "dist/public");
+    app.use(express.static(publicPath));
+    
+    // Handle SPA routing
+    app.get("*", (_req, res) => {
+      res.sendFile(path.join(publicPath, "index.html"));
+    });
   }
 
   // Use Vercel's PORT environment variable or fallback to 5000 for local development
   const port = process.env.PORT || 5000;
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
-    log(`serving on port ${port}`);
-  });
+  
+  // Only start the server if we're not in a serverless environment
+  if (process.env.NODE_ENV !== "production" || !process.env.VERCEL) {
+    server.listen({
+      port,
+      host: "0.0.0.0",
+      reusePort: true,
+    }, () => {
+      log(`serving on port ${port}`);
+    });
+  }
 })();
