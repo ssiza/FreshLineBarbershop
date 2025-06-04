@@ -7,6 +7,16 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+// Add CORS headers for API routes
+app.use((req, res, next) => {
+  if (req.path.startsWith('/api')) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  }
+  next();
+});
+
 app.use((req, res, next) => {
   const start = Date.now();
   const path = req.path;
@@ -58,7 +68,7 @@ app.use((req, res, next) => {
     const publicPath = path.resolve(process.cwd(), "dist/public");
     app.use(express.static(publicPath));
     
-    // Handle SPA routing
+    // Handle SPA routing - this should be after all other routes
     app.get("*", (_req, res) => {
       res.sendFile(path.join(publicPath, "index.html"));
     });
